@@ -1,4 +1,4 @@
-const BOARD_SIZE = 20; // 10 -> 20으로 변경
+const BOARD_SIZE = 20; // 20x20 보드
 const board = document.getElementById('board');
 const statusDisplay = document.getElementById('status');
 const restartButton = document.getElementById('restart-button');
