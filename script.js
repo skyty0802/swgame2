@@ -1,4 +1,4 @@
-const BOARD_SIZE = 20; // 20x20 보드
+const BOARD_SIZE = 10; 
 const board = document.getElementById('board');
 const statusDisplay = document.getElementById('status');
 const restartButton = document.getElementById('restart-button');
@@ -62,7 +62,7 @@ function isConnected(tile1, tile2) {
 function checkConnection() {
     document.querySelectorAll('.tile').forEach(el => el.classList.remove('connected'));
     
-    // 연결되지 않았을 때 메시지
+    // 👇 요청하신 '연결되지 않음' 메시지
     statusDisplay.textContent = "tip: 시작점과 끝점을 회전시킬 수 있습니다!";
 
     const startTile = tiles.find(t => t.type === 'start');
@@ -106,7 +106,7 @@ function checkConnection() {
     }
 
     if (isWin) {
-        // 성공 메시지
+        // 👇 요청하신 '성공' 메시지
         statusDisplay.textContent = "🥳 예언자의 방 비밀번호는 218입니다";
         isGameOver = true;
     }
