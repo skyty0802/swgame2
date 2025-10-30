@@ -1,0 +1,198 @@
+:root {
+    /* 타일 크기 조정 (10x10을 위해 35px 사용) */
+    --tile-size: 35px; 
+    --pipe-thickness: 15px;
+    --pipe-half-thickness: calc(var(--pipe-thickness) / 2);
+    --pipe-color: #555;
+    --connected-color: #00cc00;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+#game-container {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#board {
+    display: grid;
+    /* 10x10 보드 설정 */
+    grid-template-columns: repeat(10, var(--tile-size)); 
+    grid-template-rows: repeat(10, var(--tile-size));
+    border: 4px solid #333;
+    margin: 20px auto;
+}
+
+.tile {
+    width: var(--tile-size);
+    height: var(--tile-size);
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    transition: transform 0.2s ease-out; 
+    position: relative; 
+    overflow: hidden; 
+}
+
+/* --- 파이프 공통 스타일 (중앙선 기준) --- */
+.tile::before, .tile::after {
+    content: '';
+    position: absolute;
+    background-color: var(--pipe-color); 
+    z-index: 1;
+}
+
+/* --- 파이프 타입별 시각화 --- */
+
+/* 직선 파이프 (N-S) */
+.pipe-straight::after {
+    width: var(--pipe-thickness);
+    height: 100%;
+    left: calc(50% - var(--pipe-half-thickness));
+    top: 0;
+}
+.pipe-straight::before { content: none; }
+
+/* 코너 파이프 (L자) - N-E */
+.pipe-corner::after {
+    /* 수평 부분 (E) */
+    width: 50%;
+    height: var(--pipe-thickness);
+    left: 50%; 
+    top: calc(50% - var(--pipe-half-thickness));
+}
+.pipe-corner::before {
+    /* 수직 부분 (N) */
+    content: '';
+    position: absolute;
+    background-color: var(--pipe-color);
+    width: var(--pipe-thickness);
+    height: 50%;
+    left: calc(50% - var(--pipe-half-thickness));
+    top: 0; 
+}
+
+/* T자 파이프 (N-E-S) */
+.pipe-tee::after {
+    /* 수직선 (N-S) */
+    width: var(--pipe-thickness);
+    height: 100%;
+    left: calc(50% - var(--pipe-half-thickness));
+    top: 0;
+}
+.pipe-tee::before {
+    /* 수평선 (E) */
+    content: '';
+    position: absolute;
+    background-color: var(--pipe-color);
+    width: 50%; 
+    height: var(--pipe-thickness);
+    left: 50%; 
+    top: calc(50% - var(--pipe-half-thickness));
+}
+
+/* 막힌 파이프 (End) - N */
+.pipe-end::after {
+    width: var(--pipe-thickness);
+    height: 50%;
+    left: calc(50% - var(--pipe-half-thickness)); 
+    top: 0; 
+}
+.pipe-end::before { content: none; }
+
+
+/* --- 시작/종료점 스타일 --- */
+
+/* 시작점 (서버) - E(90) 기본 방향 */
+.pipe-start {
+    background-color: #ffcccc; 
+}
+.pipe-start::after {
+    /* 파이프 (E 방향) */
+    width: 50%;
+    height: var(--pipe-thickness);
+    top: calc(50% - var(--pipe-half-thickness));
+    left: 50%; 
+    background-color: var(--pipe-color);
+    z-index: 1;
+}
+.pipe-start::before {
+    /* 서버 모양 (빨간 동그라미) */
+    content: '';
+    position: absolute;
+    width: 20px; 
+    height: 20px;
+    background-color: #c00;
+    border-radius: 50%;
+    z-index: 2;
+    /* 중앙 정렬 */
+    left: calc(50% - 10px);
+    top: calc(50% - 10px);
+}
+
+/* 종료점 (외부 네트워크) - W(270) 기본 방향 */
+.pipe-exit {
+    background-color: #cceeff; 
+}
+.pipe-exit::after {
+    /* 파이프 (W 방향) */
+    width: 50%;
+    height: var(--pipe-thickness);
+    top: calc(50% - var(--pipe-half-thickness));
+    left: 0; 
+    background-color: var(--pipe-color);
+    z-index: 1;
+}
+.pipe-exit::before {
+    /* 외부 네트워크 모양 (파란 동그라미) */
+    content: '';
+    position: absolute;
+    width: 20px; 
+    height: 20px;
+    background-color: #00c;
+    border-radius: 50%;
+    z-index: 2;
+    left: calc(50% - 10px);
+    top: calc(50% - 10px);
+}
+
+/* --- 연결 상태 시각화 --- */
+.connected {
+    background-color: #aaffaa; 
+}
+.connected::after, .connected::before {
+    background-color: var(--connected-color) !important;
+}
+
+/* --- 컨트롤 영역 (기존과 동일) --- */
+#controls {
+    margin-top: 20px;
+}
+
+#status {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+#restart-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
