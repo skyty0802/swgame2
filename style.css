@@ -1,15 +1,8 @@
 :root {
-    /* 타일 크기 고정: 20x20 보드를 위해 20px 유지 */
-    --tile-size: 20px; 
-    
-    /* 파이프 두께: 타일 크기 20px에 맞게 6px로 재조정 */
-    --pipe-thickness: 6px;
+    /* 타일 크기 조정 (10x10을 위해 35px 사용) */
+    --tile-size: 35px; 
+    --pipe-thickness: 15px;
     --pipe-half-thickness: calc(var(--pipe-thickness) / 2);
-    
-    /* 시작/종료점 원 크기: 타일 크기에 맞게 10px로 재조정 */
-    --endpoint-size: 10px;
-    --endpoint-half-size: calc(var(--endpoint-size) / 2);
-
     --pipe-color: #555;
     --connected-color: #00cc00;
 }
@@ -34,9 +27,9 @@ body {
 
 #board {
     display: grid;
-    /* 20x20 보드 설정 */
-    grid-template-columns: repeat(20, var(--tile-size)); 
-    grid-template-rows: repeat(20, var(--tile-size));
+    /* 10x10 보드 설정 */
+    grid-template-columns: repeat(10, var(--tile-size)); 
+    grid-template-rows: repeat(10, var(--tile-size));
     border: 4px solid #333;
     margin: 20px auto;
 }
@@ -139,14 +132,14 @@ body {
     /* 서버 모양 (빨간 동그라미) */
     content: '';
     position: absolute;
-    width: var(--endpoint-size); 
-    height: var(--endpoint-size);
+    width: 20px; 
+    height: 20px;
     background-color: #c00;
     border-radius: 50%;
     z-index: 2;
     /* 중앙 정렬 */
-    left: calc(50% - var(--endpoint-half-size));
-    top: calc(50% - var(--endpoint-half-size));
+    left: calc(50% - 10px);
+    top: calc(50% - 10px);
 }
 
 /* 종료점 (외부 네트워크) - W(270) 기본 방향 */
@@ -166,13 +159,13 @@ body {
     /* 외부 네트워크 모양 (파란 동그라미) */
     content: '';
     position: absolute;
-    width: var(--endpoint-size); 
-    height: var(--endpoint-size);
+    width: 20px; 
+    height: 20px;
     background-color: #00c;
     border-radius: 50%;
     z-index: 2;
-    left: calc(50% - var(--endpoint-half-size));
-    top: calc(50% - var(--endpoint-half-size));
+    left: calc(50% - 10px);
+    top: calc(50% - 10px);
 }
 
 /* --- 연결 상태 시각화 --- */
