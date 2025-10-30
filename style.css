@@ -1,8 +1,15 @@
 :root {
-    /* 타일 크기 조정 (20x20을 위해 20px 사용) */
+    /* 타일 크기 고정: 20x20 보드를 위해 20px 유지 */
     --tile-size: 20px; 
-    --pipe-thickness: 10px; /* 파이프 두께 조정 */
+    
+    /* 파이프 두께: 타일 크기 20px에 맞게 6px로 재조정 */
+    --pipe-thickness: 6px;
     --pipe-half-thickness: calc(var(--pipe-thickness) / 2);
+    
+    /* 시작/종료점 원 크기: 타일 크기에 맞게 10px로 재조정 */
+    --endpoint-size: 10px;
+    --endpoint-half-size: calc(var(--endpoint-size) / 2);
+
     --pipe-color: #555;
     --connected-color: #00cc00;
 }
@@ -12,7 +19,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* 20x20 보드를 위해 최소 높이를 조정 */
     min-height: 100vh;
     margin: 0;
     background-color: #f4f4f4;
@@ -133,14 +139,14 @@ body {
     /* 서버 모양 (빨간 동그라미) */
     content: '';
     position: absolute;
-    width: 12px; /* 크기 조정 */
-    height: 12px;
+    width: var(--endpoint-size); 
+    height: var(--endpoint-size);
     background-color: #c00;
     border-radius: 50%;
     z-index: 2;
     /* 중앙 정렬 */
-    left: calc(50% - 6px);
-    top: calc(50% - 6px);
+    left: calc(50% - var(--endpoint-half-size));
+    top: calc(50% - var(--endpoint-half-size));
 }
 
 /* 종료점 (외부 네트워크) - W(270) 기본 방향 */
@@ -160,13 +166,13 @@ body {
     /* 외부 네트워크 모양 (파란 동그라미) */
     content: '';
     position: absolute;
-    width: 12px; /* 크기 조정 */
-    height: 12px;
+    width: var(--endpoint-size); 
+    height: var(--endpoint-size);
     background-color: #00c;
     border-radius: 50%;
     z-index: 2;
-    left: calc(50% - 6px);
-    top: calc(50% - 6px);
+    left: calc(50% - var(--endpoint-half-size));
+    top: calc(50% - var(--endpoint-half-size));
 }
 
 /* --- 연결 상태 시각화 --- */
